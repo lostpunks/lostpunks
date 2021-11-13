@@ -1,0 +1,179 @@
+<html>
+<head>
+<title>Lost Punk Society</title>
+</head>
+<body>
+<style>
+html {
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+h1 {
+    font-weight: 600;
+    font-size: 40px;
+    letter-spacing: 0px;
+}
+p {
+    font-weight: 500;
+    margin-top: 0px;
+    font-size: 16px;
+}
+p.highlight {
+  font-style: oblique;
+}
+p.small {
+    font-size: 12px;
+}
+p.punkFooter {
+  	background-color: #ffffff;
+    font-size: 10px;
+    padding: 1px;
+    margin: 0px;
+}
+a {
+    text-decoration: none;
+    color: #9F2B68;
+    font-size: 14px;
+}
+a:hover {
+    text-decoration: underline;
+}
+body {
+  	background-color: #ffb8bf;
+}
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ffb8bf;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  margin:10px;
+  left: 50%;
+  position:fixed 
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+div .punk {
+   	width:50px;
+   	max-width:50px;
+   	display: inline-block;
+	background-color: #638596;
+	border: 2px solid black;
+	margin:10px;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js"></script>
+<script type="text/javascript">  
+require(['https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js'], function (Web3) {
+	const abi = JSON.parse('[{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"index\",\"type\":\"uint16\"}],\"name\":\"punkAttributes\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"text\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"index\",\"type\":\"uint16\"}],\"name\":\"punkImageSvg\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"svg\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]');
+	const web3 = new Web3('https://cloudflare-eth.com');
+	const address = '0xa583bEACDF3Ed3808402f8dB4F6628a7E1C6ceC6';
+	const contract = new web3.eth.Contract(abi, address);
+
+	const placeholder = document.getElementById('placeholder');
+	const tree = document.getElementById('tree');
+
+	function htmlElement(html) {
+		var template = document.createElement('template');
+		template.innerHTML = html.trim();
+		return template.content.firstChild;
+	}
+
+	function wrapSvgElement(svg, id) {
+		var svg = htmlElement('<div class="punk">' + svg + '</div>');
+		svg.appendChild(htmlElement('<p class="punkFooter">#' + id + '<p>'));
+		return svg;
+	}
+
+	function drawPunks(punks) {
+		const levelCount = Object.keys(punks).length;
+		for (var level = 0; level < levelCount; ++level) {
+			punks[level].forEach(punk => {
+				tree.appendChild(wrapSvgElement(punk['svg'], punk['id']));
+			});
+			tree.appendChild(htmlElement('<br/>'));
+		}
+		placeholder.hidden = true;
+		tree.hidden = false;
+	}
+
+	function fetchPunks(punkIDs, levels, resultDict, keys) {
+		if (punkIDs.length == 0) { 
+			drawPunks(resultDict);
+			return; 
+		}
+		const punkID = punkIDs.shift();
+		const level = levels.shift();
+		contract.methods.punkImageSvg(punkID).call({from:address}).then(function(result){
+			var levelPunks = resultDict[level] ?? [];
+			levelPunks.push({'svg':result, 'id': punkID});
+			resultDict[level] = levelPunks;
+			contract.methods.punkAttributes(punkID).call({from:address}).then(function(result){
+				console.log(result);
+				result.split(', ').forEach(att => {
+					const keyValue = att.split(': ')
+					if (keyValue[1] != "-") {
+						keys.forEach(key => {
+							if (keyValue[0] == key) {
+								punkIDs.push(keyValue[1]);	
+								levels.push(level + 1);						
+							}
+						});
+					}
+				});
+				fetchPunks(punkIDs, levels, resultDict, keys);
+			});
+		});
+	}
+
+	function addButtonEventHandlerWithKeys(button, keys) {
+		button.addEventListener('click', function(e) {
+			tree.hidden = true;
+			while (tree.firstChild) {
+			    tree.removeChild(tree.lastChild);
+	  		}
+			placeholder.hidden = false;
+			fetchPunks([input.value], [0], {}, keys);
+		});
+	}
+
+	var input = document.getElementById('punkID');
+	addButtonEventHandlerWithKeys(document.getElementById('parentsButton'), ['Mother', 'Father']);
+	addButtonEventHandlerWithKeys(document.getElementById('childrenButton'), ['Child 1', 'Child 2']);
+});
+</script>
+<h1>Lost Punk Society</h1>
+<p><a href="https://etherscan.io/address/0xa583beacdf3ed3808402f8db4f6628a7e1c6cec6/#writeContract">Etherscan</a>
+<a href="https://twitter.com/lostpunks">Twitter</a>
+<a href="https://discord.gg/6e7xHrY58w">Discord</a>
+<a href="https://opensea.io/collection/lostpunksociety">OpenSea</a></p>
+<p>
+Welcome to the Lost Punk Society, where descendants of the original CryptoPunks gather to share their colorful stories. New members can only be added by those who own both a father punk and a mother punk. But beware! No punk can ever have more than two children, and parents cannot be closely related.
+</p>
+<p class="highlight">
+If you decide to buy a Lost Punk (or CryptoPunk) with the intention of minting more children from it, you should check how many children were previously minted before completing your purchase, by entering the token ID below.
+</p>
+<p>
+Metadata and images are fully generated and stored on-chain. Cost of minting increases by 0.05E per generation (free if both parents are CryptoPunks) with 10% donated to GiveDirectly.org.
+</p>
+<p>
+Will siblings go their separate ways to be reunited years later? How often will twins occur? Will we see any lost aliens or apes? Do we risk a zombie infestation? Only time will tell...
+</p>
+<p class="small">
+Inspired by LarvaLabs (not affiliated).
+</p>
+<p>Token ID: <input type="textarea" name="textfield" id="punkID">
+<button type="button" id='parentsButton'>Draw Parents</button>
+<button type="button" id='childrenButton'>Draw Children</button>
+</p>
+<div id="placeholder" class="loader" hidden="true"></div>
+<div id="tree">
+</div>
+</body>
+</html>
