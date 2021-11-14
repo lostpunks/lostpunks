@@ -68,7 +68,7 @@ button.small {
   border-radius: 4px;
 }
 button:hover {
-  background: #af686f;
+  background: black;
   color: #efa8af;
 } 
 #mint-button {
