@@ -1,0 +1,134 @@
+html {
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+body {
+  margin: 0px;
+  background-color: #ffb8bf;
+}
+div.content {
+  max-width: 700px;
+  margin: auto;
+}
+label {
+  line-height: 30px;
+}
+label.form-control {
+  width: 200px;
+}
+input.form-control {
+  width: 80px;
+  height: 18px;
+  text-align: center;
+  background-color: #efa8af;
+  border: 2px solid #cf888f;
+  border-radius: 4px;
+  outline: none;
+}
+::placeholder {
+  color: #af686f;
+  opacity: 1;
+}
+button {
+  font-weight: 500;
+  font-size: 16px;
+  color: #af686f;
+  width: 200px;
+  height: 30px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: #efa8af;
+  border: 2px solid #cf888f;
+  border-radius: 4px;
+}
+#wallet-button {
+  float: right;
+  position: sticky;
+  top: 10px; 
+  right: 20px;
+  margin-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+button.small {
+  font-weight: 500;
+  font-size: 12px;
+  color: #af686f;
+  width: 100px;
+  height: 24px;
+  margin-bottom: 0px;
+  background-color: #efa8af;
+  border: 2px solid #cf888f;
+  border-radius: 4px;
+}
+button:hover {
+  background: #af686f;
+  color: #efa8af;
+} 
+#mint-button {
+    opacity: 0;
+}
+h1 {
+  font-weight: 600;
+  font-size: 32px;
+  letter-spacing: 0px;
+}
+img.banner {
+  width: 100% !important;
+}
+img.logo {
+  max-width: 24px;
+  max-height: 24px;
+  padding-left: 8px;
+  vertical-align: middle;
+}
+p {
+  font-weight: 500;
+  margin: 12px;
+  font-size: 16px;
+}
+p.warning {
+  font-style: oblique;
+}
+p.punkFooter {
+  background-color: #ffffff;
+  font-size: 10px;
+  padding: 1px;
+  margin: 0px;
+}
+.loader {
+  border: 4px solid #cf888f;
+  border-top: 4px solid #ffb8bf;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  margin:10px;
+  margin-left: 50%;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+div.punk, div.punkSelected {
+  width:50px;
+  max-width:50px;
+  display: inline-block;
+  background-color: #638596;
+  border: 2px solid black;
+  margin:4px;
+}
+div#wallet div.punkSelected {
+  border: 2px solid #ff04b4;
+}
+div#wallet div.punk, div#wallet div.punkSelected {
+  cursor: pointer;
+}
+div.punk p, div.punkSelected p {
+  margin-top: -4px;
+}

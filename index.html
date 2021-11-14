@@ -1,8 +1,57 @@
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="refresh" content="0; URL=https://lostpunksociety.eth.link" />
-<title>Lost Punk Society</title>
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>Lost Punk Society</title>
+    <link rel="shortcut icon" href="icon.png" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@v1.6.0/dist/web3.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </head>
 <body>
-</body>
+<button id="wallet-button" type="button" onclick="return connectWallet();">Connect Wallet</button>
+<div class="content">
+  <h1>Lost Punk Society</h1>
+<p>
+<a href="https://discord.gg/6e7xHrY58w" target="_blank"><img class="logo" alt="Discord" src="discord.png"/></a>
+<a href="https://twitter.com/lostpunks" target="_blank"><img class="logo" alt="Twitter" src="twitter.png"/></a>
+<a href="https://opensea.io/collection/lostpunksociety" target="_blank"><img class="logo" alt="OpenSea" src="opensea.png"/></a>
+<a href="https://etherscan.io/address/0xa583beacdf3ed3808402f8db4f6628a7e1c6cec6/#writeContract" target="_blank"><img class="logo" alt="Etherscan" src="etherscan.png"/></a>
+<a href="https://lostpunks.medium.com" target="_blank"><img class="logo" alt="Medium" src="medium.png"/></a>
+</p>
+<p>
+Welcome to the Lost Punk Society, where the descendants of the original CryptoPunks gather to share their colorful stories. New members can only be added by those who own both a father punk and a mother punk. But beware! No punk can ever have more than two children, and parents cannot be closely related.
+</p>
+<p>
+Will siblings go their separate ways to be reunited years later? How often will twins occur? Will we see any lost aliens or apes? Do we risk a zombie infestation? Only time will tell...
+</p>
+<p class="warning">
+⚠ If you decide to buy a Lost Punk (or CryptoPunk) with the intention of minting more children from it, you should check how many children were previously minted before completing your purchase, by entering the token ID below.
+</p>
+</p>
+<label class="form-control">Punk #</label>
+<input class="form-control" type="text" id="punkId" placeholder="Enter ID">
+<button type="button" class="small" id='parentsButton'>Show Parents</button>
+<button type="button" class="small" id='childrenButton'>Show Children</button>
+</p>
+<div id="tree-placeholder" class="loader" hidden="true"></div>
+<div id="tree">
+</div>
+<h2>
+Ready to Breed?
+</h2>
+<div id="wallet-placeholder" class="loader" hidden="true"></div>
+<div id="wallet"></div>
+<label id="mint-label">Connect wallet to explore your options.</label>
+<div>
+<button id="mint-button" type="button">&nbsp;</button>
+</div>
+<p>
+Metadata and images are fully generated and stored on-chain. Total supply limited to 10,000 and 9 generations. Cost of minting increases by 0.05E per generation (free if both parents are CryptoPunks) with 10% donated to GiveDirectly.org.
+</p>
+<p>
+Inspired by Larva Labs (not affiliated).
+</p>
+</div>
+  </body>
 </html>
