@@ -69,13 +69,19 @@ var drawPunks = function(punks, rootElement, selectable) {
   let placeholder = document.getElementById(rootElement + '-placeholder');
   let tree = document.getElementById(rootElement);
 
+  var drawnPunks = {};
+
   let levelCount = Object.keys(punks).length;
   for (var level = 0; level < levelCount; ++level) {
     if (level > 0) {
       tree.appendChild(htmlElement('<br/>'));
     }
     punks[level].forEach(punk => {
-      tree.appendChild(wrapSvgElement(punk['svg'], punk['id'], selectable));
+      let punkID = punk['id'];
+      if (!drawnPunks[punkID]) {
+        drawnPunks[punkID] = true;
+        tree.appendChild(wrapSvgElement(punk['svg'], punk['id'], selectable));
+      }
     });
   }
 
