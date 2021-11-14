@@ -263,11 +263,11 @@ var validateMint = function(father, mother) {
   let motherType = mother['type'];
 
   if (father['Child 2'] !== '-') {
-    label.innerHTML = fatherID + " already has 2 children.";
+    label.innerHTML = "Punk #" + fatherID + " already has two children.";
     return;
   }
   if (mother['Child 2'] !== '-') {
-    label.innerHTML = motherID + " already has 2 children.";
+    label.innerHTML = "Punk #" + motherID + " already has two children.";
     return;
   }
   if (fatherType.startsWith('Alien') || fatherType.startsWith('Ape')) {
